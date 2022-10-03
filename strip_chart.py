@@ -92,7 +92,7 @@ def main():
         ticks="outside",
         ticklen=10,
         tickfont_size=14,
-        title_standoff=20,
+        title_standoff=18,
         tickcolor="#FFFFFF",
         linewidth=2,
         gridwidth=0.0,

@@ -10,7 +10,6 @@ http://www2.ssn.unam.mx:8080/catalogo/
 import pandas as pd
 import plotly.graph_objects as go
 
-
 # Este diccionario será utilizado para asignar colores
 # a cada estado de la república.
 COLORES = {
@@ -61,7 +60,8 @@ def main():
     df["Magnitud"] = df["Magnitud"].astype(float)
 
     # Extraemos el estado donde ocurrió cada sismo usando una función personalizada.
-    df["estado"] = df["Referencia de localizacion"].apply(extraer_estado)
+    df["estado"] = df["Referencia de localizacion"].apply(
+        lambda x: x.split(",")[-1].strip())
 
     fig = go.Figure()
 
@@ -177,13 +177,6 @@ def main():
     )
 
     fig.write_image("./top10.png")
-
-
-def extraer_estado(x):
-    # El nombre del estado siempre se encuentra después de la última coma
-    # sin embargo, a veces tiene espacios en blanco, entonces usamos
-    # el método strip() para limpiarlo.
-    return x.split(",")[-1].strip()
 
 
 if __name__ == "__main__":

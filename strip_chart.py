@@ -12,7 +12,6 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
-
 # Este diccionario será utilizado para nuestras
 # etiquetas del eje horizontal.
 MESES = {
@@ -36,7 +35,7 @@ def main():
     # Creamos 12 tonos de colores tipo hsla, con 100% de saturación
     # 75% de iluminación y 90% de transparencia.    
     tonos_de_color = [
-        f"hsla({h}, 100%, 75%, 0.9)" for h in np.linspace(0, 360, 12)]
+        f"hsla({h}, 100%, 75%, 1.0)" for h in np.linspace(0, 360, 12)]
 
     # Cargamos nuestro dataset de sismos.
     df = pd.read_csv("./data.csv", parse_dates=["Fecha"], index_col="Fecha")
@@ -82,8 +81,10 @@ def main():
                 line_width=0,
                 fillcolor="hsla(0, 0, 0, 0)",
                 jitter=1,
-                marker_size=12,
-                marker_color=tonos_de_color[-numero]
+                marker_size=14,
+                marker_color=tonos_de_color[-numero],
+                marker_symbol="circle-open",
+                marker_line_width=2.5,
             )
         )
 
@@ -122,7 +123,7 @@ def main():
         font_family="Quicksand",
         font_color="white",
         font_size=18,
-        title_text="Distribución de eventos sísmicos de <b>magnitud ≥ 6.0</b> por mes de ocurrencia en México (1900-2022)",
+        title_text="Distribución de eventos sísmicos de <b>magnitud ≥ 6.0</b> por mes de ocurrencia en México (1900-2023)",
         title_x=0.5,
         title_y=0.965,
         margin_t=60,
@@ -140,7 +141,7 @@ def main():
                 yref="paper",
                 xanchor="left",
                 yanchor="top",
-                text="Fuente: SSN"
+                text="Fuente: SSN (28/07/2023)"
             ),
             dict(
                 x=1.01,
@@ -153,7 +154,7 @@ def main():
             )
         ])
 
-    fig.write_image("./1.png")
+    fig.write_image("./strip_chart.png")
 
 
 if __name__ == "__main__":

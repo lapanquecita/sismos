@@ -70,11 +70,11 @@ def main():
 
         # Creamos un DataFrame con el año correspondiente
         # ordenamos las magnitudes de mayor a menor y seleccionamos
-        # solo las primeras 8.
+        # solo las primeras 10.
         temp_df = df[df.index.year == año].sort_values(
             "Magnitud", ascending=False)[:10]
 
-        # Reseteamos el índice para que sea un valor del 0 al 7.
+        # Reseteamos el índice para que sea un valor del 0 al 9.
         temp_df.reset_index(inplace=True)
 
         # Aquí creamos el texto para los círculos usando el nombre del estado extráido previamente.
@@ -107,13 +107,10 @@ def main():
         showticklabels=False,
         ticklen=10,
         zeroline=False,
-        title_standoff=20,
-        tickcolor="#FFFFFF",
         linewidth=2,
         showline=True,
         mirror=True,
         showgrid=False,
-        nticks=0
     )
 
     fig.update_yaxes(
@@ -129,7 +126,6 @@ def main():
         showline=True,
         mirror=True,
         showgrid=False,
-        nticks=0
     )
 
     fig.update_layout(
@@ -137,7 +133,7 @@ def main():
         width=1280,
         height=1600,
         font_family="Quicksand",
-        font_color="white",
+        font_color="#FFFFFF",
         font_size=18,
         title_text="Los 10 eventos sísmicos con mayor magnitud<br>registrados en México por año (2011-2023)",
         title_x=0.5,

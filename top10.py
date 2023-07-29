@@ -66,13 +66,13 @@ def main():
     fig = go.Figure()
 
     # iteramos sobre los años que nos interesan.
-    for año in range(2008, 2024):
+    for año in range(2011, 2024):
 
         # Creamos un DataFrame con el año correspondiente
         # ordenamos las magnitudes de mayor a menor y seleccionamos
         # solo las primeras 8.
         temp_df = df[df.index.year == año].sort_values(
-            "Magnitud", ascending=False)[:8]
+            "Magnitud", ascending=False)[:10]
 
         # Reseteamos el índice para que sea un valor del 0 al 7.
         temp_df.reset_index(inplace=True)
@@ -87,7 +87,7 @@ def main():
 
         # El eje vertical va a ser el año 8 veces.
         # Esto es como un hack para que nuestra visualización funcione.
-        y = [f"{año:.0f}" for _ in range(8)]
+        y = [f"{año:.0f}" for _ in range(10)]
 
         fig.add_trace(
             go.Scatter(
@@ -103,8 +103,7 @@ def main():
         )
 
     fig.update_xaxes(
-        title="",
-        range=[-0.75, 7.75],
+        range=[-0.6, 9.6],
         showticklabels=False,
         ticklen=10,
         zeroline=False,
@@ -120,7 +119,7 @@ def main():
     fig.update_yaxes(
         title="Año del evento sísmico",
         title_font_size=28,
-        range=[-0.75, 15.75],
+        range=[-0.6, 12.6],
         ticks="outside",
         ticklen=10,
         zeroline=False,
@@ -135,18 +134,18 @@ def main():
 
     fig.update_layout(
         showlegend=False,
-        width=1080,
-        height=1920,
+        width=1280,
+        height=1600,
         font_family="Quicksand",
         font_color="white",
         font_size=18,
-        title_text="Los 8 eventos sísmicos con mayor magnitud<br>registrados en México por año (2008-2023)",
+        title_text="Los 10 eventos sísmicos con mayor magnitud<br>registrados en México por año (2011-2023)",
         title_x=0.5,
         title_y=0.97,
         margin_t=120,
         margin_l=140,
         margin_r=40,
-        margin_b=60,
+        margin_b=55,
         title_font_size=30,
         plot_bgcolor="#331D2C",
         paper_bgcolor="#331D2C",
@@ -155,7 +154,7 @@ def main():
                 x=0.01,
                 xanchor="left",
                 xref="paper",
-                y=-0.045,
+                y=-0.05,
                 yanchor="bottom",
                 yref="paper",
                 text="Fuente: SSN (28/07/2023)"
@@ -164,7 +163,7 @@ def main():
                 x=0.5,
                 xanchor="center",
                 xref="paper",
-                y=-0.045,
+                y=-0.05,
                 yanchor="bottom",
                 yref="paper",
                 text="Magnitud, ubicación y fecha de ocurrencia"
@@ -173,7 +172,7 @@ def main():
                 x=1.01,
                 xanchor="right",
                 xref="paper",
-                y=-0.045,
+                y=-0.05,
                 yanchor="bottom",
                 yref="paper",
                 text="🧁 @lapanquecita"
@@ -181,7 +180,7 @@ def main():
         ]
     )
 
-    fig.write_image("./top8.png")
+    fig.write_image("./top10.png")
 
 
 def extraer_estado(x):

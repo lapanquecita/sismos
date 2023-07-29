@@ -66,7 +66,7 @@ def main():
     fig = go.Figure()
 
     # iteramos sobre los años que nos interesan.
-    for año in range(2007, 2023):
+    for año in range(2008, 2024):
 
         # Creamos un DataFrame con el año correspondiente
         # ordenamos las magnitudes de mayor a menor y seleccionamos
@@ -80,7 +80,7 @@ def main():
         # Aquí creamos el texto para los círculos usando el nombre del estado extráido previamente.
         # así como la magnitud y la fecha.
         temp_df["text"] = temp_df.apply(
-            lambda x: "{:,}<br><b>{}</b><br>{:%d-%m}".format(x["Magnitud"], x["estado"], x["Fecha"]), axis=1)
+            lambda x: f"{x['Magnitud']:,}<br><b>{x['estado']}</b><br>{x['Fecha']:%d/%m}", axis=1)
 
         # Aquí definimos el color de cada círculo usando el diccionario de colores.
         temp_df["color"] = temp_df["estado"].map(COLORES)
@@ -96,8 +96,9 @@ def main():
                 mode="markers+text",
                 text=temp_df["text"],
                 marker_color=temp_df["color"],
-                textfont_size=18,
-                marker_size=90,
+                marker_size=96,
+                textfont_size=20,
+                textfont_family="Oswald",
             )
         )
 
@@ -118,6 +119,7 @@ def main():
 
     fig.update_yaxes(
         title="Año del evento sísmico",
+        title_font_size=28,
         range=[-0.75, 15.75],
         ticks="outside",
         ticklen=10,
@@ -138,16 +140,16 @@ def main():
         font_family="Quicksand",
         font_color="white",
         font_size=18,
-        title_text="Los eventos sísmicos con mayor magnitud registrados en México del 2007 al 2022",
+        title_text="Los 8 eventos sísmicos con mayor magnitud<br>registrados en México por año (2008-2023)",
         title_x=0.5,
-        title_y=0.98,
-        margin_t=80,
-        margin_l=120,
+        title_y=0.97,
+        margin_t=120,
+        margin_l=140,
         margin_r=40,
         margin_b=60,
-        title_font_size=26,
-        plot_bgcolor="#0F0E0E",
-        paper_bgcolor="#541212",
+        title_font_size=30,
+        plot_bgcolor="#331D2C",
+        paper_bgcolor="#331D2C",
         annotations=[
             dict(
                 x=0.01,
@@ -156,7 +158,7 @@ def main():
                 y=-0.045,
                 yanchor="bottom",
                 yref="paper",
-                text="Fuente: SSN"
+                text="Fuente: SSN (28/07/2023)"
             ),
             dict(
                 x=0.5,
@@ -179,7 +181,7 @@ def main():
         ]
     )
 
-    fig.write_image("./2.png")
+    fig.write_image("./top8.png")
 
 
 def extraer_estado(x):

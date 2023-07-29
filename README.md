@@ -9,6 +9,10 @@ También se incluyen algunos ejemplos de como crear gráficas con esta informaci
 
 ![Imagen 1](./1.png)
 
-## Los eventos sísmicos con mayor magnitud en México ocurrencia
+## Los eventos sísmicos con mayor magnitud en México
 
-![Imagen 2](./2.png)
+En esta gráfica se muestran los eventos sísmicos con mayor magnitud en los últimos años. Para esto se utilizan varias series de scatter plots donde cada uno representa un año.
+
+En cada círculo se muestra la magnitud, la entidad donde ocurrió el sismo, así como la fecha (día/mes).
+
+![Imagen 2](./top10.png)

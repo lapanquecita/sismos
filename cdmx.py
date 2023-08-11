@@ -54,7 +54,7 @@ def main():
 
     # Iteramos sobre las alcaldías dentro del GeoJSON.
     for item in geojson["features"]:
-        geo = item["properties"]["NOM_MUN"]
+        geo = item["properties"]["CVEGEO"]
         
         # A cada alcaldía le asignamos el valor 1.
         ubicaciones.append(geo)
@@ -69,7 +69,7 @@ def main():
             locations=ubicaciones,
             z=valores,
             showscale=False,
-            featureidkey="properties.NOM_MUN",
+            featureidkey="properties.CVEGEO",
             colorscale=["#000000", "#000000"],
             marker_line_color="#FFFFFF",
             marker_line_width=1.5,

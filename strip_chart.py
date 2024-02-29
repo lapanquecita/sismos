@@ -26,16 +26,14 @@ MESES = {
     9: "Sep.",
     10: "Oct.",
     11: "Nov.",
-    12: "Dic."
+    12: "Dic.",
 }
 
 
 def main():
-
     # Creamos 12 tonos de colores tipo hsla, con 100% de saturación
-    # 75% de iluminación y 90% de transparencia.    
-    tonos_de_color = [
-        f"hsla({h}, 100%, 75%, 1.0)" for h in np.linspace(0, 360, 12)]
+    # 75% de iluminación y 90% de transparencia.
+    tonos_de_color = [f"hsla({h}, 100%, 75%, 1.0)" for h in np.linspace(0, 360, 12)]
 
     # Cargamos nuestro dataset de sismos.
     df = pd.read_csv("./data.csv", parse_dates=["Fecha"], index_col="Fecha")
@@ -53,7 +51,6 @@ def main():
 
     # Vamor a iterar sobre todos los meses y extraer los sismos correspondientes.
     for numero, mes in MESES.items():
-
         # Seleccionamos todos los sismos del mes correspondiente.
         temp_df = df[df.index.month == numero]
 
@@ -61,7 +58,7 @@ def main():
         # Esta etiqueta es la misma cadena de caracteres repetida el 'numero
         # de veces igual al largo del DataFrame del mes correspondiente.
         etiquetas = [f"{mes} ({len(temp_df)})" for _ in range(len(temp_df))]
-        
+
         # Las magnitudes son extraídas de la columna y convertidas a una lista.
         magnitudes = temp_df["Magnitud"].tolist()
 
@@ -89,7 +86,6 @@ def main():
         )
 
     fig.update_xaxes(
-        title="Mes de ocurrencia (total de registros)",
         ticks="outside",
         ticklen=10,
         tickfont_size=14,
@@ -98,7 +94,7 @@ def main():
         linewidth=2,
         gridwidth=0.0,
         showline=True,
-        mirror=True
+        mirror=True,
     )
 
     fig.update_yaxes(
@@ -113,7 +109,7 @@ def main():
         gridwidth=0.5,
         showline=True,
         mirror=True,
-        nticks=20
+        nticks=20,
     )
 
     fig.update_layout(
@@ -123,7 +119,7 @@ def main():
         font_family="Quicksand",
         font_color="white",
         font_size=18,
-        title_text="Distribución de eventos sísmicos de <b>magnitud ≥ 6.0</b> por mes de ocurrencia en México (1900-2023)",
+        title_text="Distribución de eventos sísmicos de <b>magnitud ≥ 6.0</b> por mes de ocurrencia en México (1900-2024)",
         title_x=0.5,
         title_y=0.965,
         margin_t=60,
@@ -141,7 +137,16 @@ def main():
                 yref="paper",
                 xanchor="left",
                 yanchor="top",
-                text="Fuente: SSN (28/07/2023)"
+                text="Fuente: SSN (29/02/2024)",
+            ),
+            dict(
+                x=0.5,
+                y=-0.13,
+                xref="paper",
+                yref="paper",
+                xanchor="center",
+                yanchor="top",
+                text="Mes de ocurrencia (total de registros)",
             ),
             dict(
                 x=1.01,
@@ -150,13 +155,13 @@ def main():
                 yref="paper",
                 xanchor="right",
                 yanchor="top",
-                text="🧁 @lapanquecita"
-            )
-        ])
+                text="🧁 @lapanquecita",
+            ),
+        ],
+    )
 
     fig.write_image("./strip_chart.png")
 
 
 if __name__ == "__main__":
-
     main()

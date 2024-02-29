@@ -1,5 +1,10 @@
 """
 Este script genera un mapa con la ubicación de los sismos ocurridos dentro o cerca de la CDMX.
+
+Los datos más nuevos se pueden obtener del siguiente enlace:
+
+http://www2.ssn.unam.mx:8080/catalogo/
+
 """
 
 import json
@@ -9,16 +14,20 @@ import plotly.graph_objects as go
 
 
 def main():
+    """
+    Crea un mapa choropleth con los sismos registrados dentro de la CDMX.
+    """
 
     # Cargamos el CSV de terremotos.
     df = pd.read_csv("./data.csv", parse_dates=["Fecha"], index_col="Fecha")
 
-    # Seleccionamos registros del año 2009 en adelante.
-    df = df[df.index.year >= 2009]
+    # Seleccionamos registros del año 2010 en adelante.
+    df = df[df.index.year >= 2010]
 
     # Extraemos el nombre del estado.
     df["estado"] = df["Referencia de localizacion"].apply(
-        lambda x: x.split(",")[-1].strip())
+        lambda x: x.split(",")[-1].strip()
+    )
 
     # Escogemos solamente sismos ocurridos en la CDMX.
     df = df[df["estado"] == "CDMX"]
@@ -33,7 +42,7 @@ def main():
     por_año = ["<b>Registros por año</b>"]
 
     # Creamos un DataFrame con los registros por año.
-    df_año = df.resample("Y").count()["Magnitud"]
+    df_año = df.resample("YE").count()["Magnitud"]
 
     # Iteramos sobre este nuevo DataFrame para crear nuestros totales por año.
     for index, row in df_año.items():
@@ -50,12 +59,12 @@ def main():
     valores = list()
 
     # Cargamos el GeoJSON de la CDMX.
-    geojson = json.load(open("./Ciudad de México.json", "r", encoding="utf-8"))
+    geojson = json.load(open("./assets/Ciudad de México.json", "r", encoding="utf-8"))
 
     # Iteramos sobre las alcaldías dentro del GeoJSON.
     for item in geojson["features"]:
         geo = item["properties"]["CVEGEO"]
-        
+
         # A cada alcaldía le asignamos el valor 1.
         ubicaciones.append(geo)
         valores.append(1)
@@ -89,7 +98,6 @@ def main():
 
     # Iteramos sobre la lista anterior y creamos un Scattergeo para cada una.
     for start, end, color, nombre in bins:
-        
         # Creamos un DataFrame temporal con el rango de sismos.
         temp_df = df[df["Magnitud"].between(start, end)]
 
@@ -123,6 +131,7 @@ def main():
         showlegend=True,
         legend_bgcolor="#16213E",
         legend_title=" <b>Magnitud del sismo</b>",
+        legend_title_side="top center",
         legend_itemsizing="constant",
         legend_x=0.07,
         legend_y=0.02,
@@ -155,7 +164,7 @@ def main():
                 y=1.015,
                 xanchor="center",
                 yanchor="top",
-                text="Sismos registrados con epicentro cerca o dentro de la Ciudad de México (2009-2023)",
+                text="Sismos registrados con epicentro cerca o dentro de la Ciudad de México (2010-2024)",
                 font_size=26,
             ),
             dict(
@@ -163,7 +172,7 @@ def main():
                 y=-0.039,
                 xanchor="left",
                 yanchor="top",
-                text="Fuente: SSN (28/07/2023)",
+                text="Fuente: SSN (29/02/2024)",
                 font_size=22,
             ),
             dict(
@@ -189,5 +198,4 @@ def main():
 
 
 if __name__ == "__main__":
-
     main()

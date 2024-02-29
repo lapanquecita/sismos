@@ -1,9 +1,12 @@
 # Sismos en México
 
-Este repositorio incluye un dataset con los eventos sísmicos registrados en México desde enero del 1900 hasta julio del 2023.
+Este repositorio incluye un dataset con los eventos sísmicos registrados en México desde enero del año 1900 hasta febrero del año 2024.
 
 También se incluyen algunos ejemplos de como crear gráficas con esta información.
 
+El dataset original se puede encontrar en la siguiente dirección:
+
+http://www2.ssn.unam.mx:8080/catalogo/
 
 ## Distribución de sismos por mes de ocurrencia
 

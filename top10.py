@@ -49,7 +49,6 @@ COLORES = {
 
 
 def main():
-
     # Cargamos nuestro dataset de sismos.
     df = pd.read_csv("./data.csv", parse_dates=["Fecha"], index_col="Fecha")
 
@@ -61,18 +60,17 @@ def main():
 
     # Extraemos el estado donde ocurrió cada sismo usando una función personalizada.
     df["estado"] = df["Referencia de localizacion"].apply(
-        lambda x: x.split(",")[-1].strip())
+        lambda x: x.split(",")[-1].strip()
+    )
 
     fig = go.Figure()
 
     # iteramos sobre los años que nos interesan.
     for año in range(2011, 2024):
-
         # Creamos un DataFrame con el año correspondiente
         # ordenamos las magnitudes de mayor a menor y seleccionamos
         # solo las primeras 10.
-        temp_df = df[df.index.year == año].sort_values(
-            "Magnitud", ascending=False)[:10]
+        temp_df = df[df.index.year == año].sort_values("Magnitud", ascending=False)[:10]
 
         # Reseteamos el índice para que sea un valor del 0 al 9.
         temp_df.reset_index(inplace=True)
@@ -80,7 +78,9 @@ def main():
         # Aquí creamos el texto para los círculos usando el nombre del estado extráido previamente.
         # así como la magnitud y la fecha.
         temp_df["text"] = temp_df.apply(
-            lambda x: f"{x['Magnitud']:,}<br><b>{x['estado']}</b><br>{x['Fecha']:%d/%m}", axis=1)
+            lambda x: f"{x['Magnitud']:,}<br><b>{x['estado']}</b><br>{x['Fecha']:%d/%m}",
+            axis=1,
+        )
 
         # Aquí definimos el color de cada círculo usando el diccionario de colores.
         temp_df["color"] = temp_df["estado"].map(COLORES)
@@ -153,7 +153,7 @@ def main():
                 y=-0.05,
                 yanchor="bottom",
                 yref="paper",
-                text="Fuente: SSN (28/07/2023)"
+                text="Fuente: SSN (29/02/2024)",
             ),
             dict(
                 x=0.5,
@@ -162,7 +162,7 @@ def main():
                 y=-0.05,
                 yanchor="bottom",
                 yref="paper",
-                text="Magnitud, ubicación y fecha de ocurrencia"
+                text="Magnitud, ubicación y fecha de ocurrencia",
             ),
             dict(
                 x=1.01,
@@ -171,14 +171,13 @@ def main():
                 y=-0.05,
                 yanchor="bottom",
                 yref="paper",
-                text="🧁 @lapanquecita"
-            )
-        ]
+                text="🧁 @lapanquecita",
+            ),
+        ],
     )
 
     fig.write_image("./top10.png")
 
 
 if __name__ == "__main__":
-
     main()

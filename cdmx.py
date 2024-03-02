@@ -101,6 +101,9 @@ def main():
         # Creamos un DataFrame temporal con el rango de sismos.
         temp_df = df[df["Magnitud"].between(start, end)]
 
+        # Contamos el número de sismos.
+        cantidad = len(temp_df)
+
         fig.add_traces(
             go.Scattergeo(
                 lon=temp_df["Longitud"],
@@ -110,7 +113,9 @@ def main():
                 marker_line_width=2.25,
                 marker_opacity=1.0,
                 marker_symbol="circle-open",
-                name=f"{nombre} ({len(temp_df)} sismos) ",
+                name=f"{nombre} ({cantidad} sismos)"
+                if cantidad != 1
+                else f"{nombre} ({cantidad} sismo)",
             )
         )
 
@@ -138,7 +143,7 @@ def main():
         legend_xanchor="left",
         legend_yanchor="bottom",
         legend_bordercolor="#FFFFFF",
-        legend_borderwidth=1.5,
+        legend_borderwidth=1.0,
         font_family="Quicksand",
         font_color="#FFFFFF",
         font_size=18,

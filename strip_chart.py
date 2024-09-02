@@ -79,7 +79,6 @@ def main():
                 fillcolor="hsla(0, 0, 0, 0)",
                 jitter=1,
                 marker_size=14,
-                marker_color=tonos_de_color[-numero],
                 marker_symbol="circle-open",
                 marker_line_width=2.5,
             )
@@ -113,6 +112,7 @@ def main():
     )
 
     fig.update_layout(
+        colorway=tonos_de_color,
         showlegend=False,
         width=1280,
         height=720,
@@ -127,8 +127,8 @@ def main():
         margin_r=40,
         margin_b=90,
         title_font_size=24,
-        plot_bgcolor="#20252f",
-        paper_bgcolor="#1E1E1E",
+        plot_bgcolor="#1E1E1E",
+        paper_bgcolor="#20252f",
         annotations=[
             dict(
                 x=0.015,
@@ -137,7 +137,7 @@ def main():
                 yref="paper",
                 xanchor="left",
                 yanchor="top",
-                text="Fuente: SSN (29/02/2024)",
+                text="Fuente: SSN (02/09/2024)",
             ),
             dict(
                 x=0.5,

@@ -177,7 +177,7 @@ def main():
                 y=-0.039,
                 xanchor="left",
                 yanchor="top",
-                text="Fuente: SSN (29/02/2024)",
+                text="Fuente: SSN (02/09/2024)",
                 font_size=22,
             ),
             dict(

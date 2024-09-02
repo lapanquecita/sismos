@@ -153,7 +153,7 @@ def main():
                 y=-0.05,
                 yanchor="bottom",
                 yref="paper",
-                text="Fuente: SSN (29/02/2024)",
+                text="Fuente: SSN (02/09/2024)",
             ),
             dict(
                 x=0.5,

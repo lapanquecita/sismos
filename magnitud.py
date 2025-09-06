@@ -2,7 +2,6 @@ import pandas as pd
 import plotly.graph_objects as go
 from PIL import Image
 
-
 MESES = {
     1: "Ene.",
     2: "Feb.",
@@ -57,6 +56,15 @@ def plot_magnitud(low, high, archivo):
     # Actualizamos los valores del esqueleto con los valores reales.
     meses_df.update(df["mes"].value_counts().to_frame("total"))
 
+    # Preparamos los textos para cada barra.
+    meses_df["perc"] = meses_df["total"] / meses_df["total"].sum() * 100
+    meses_df["text"] = meses_df.apply(
+        lambda x: f"<b>{x['total']:,.0f}</b><br>({x['perc']:,.1f}%)".replace(
+            ".0%", "%"
+        ),
+        axis=1,
+    )
+
     # Agregamos el nombre del mes.
     meses_df.index = meses_df.index.map(MESES)
 
@@ -66,10 +74,10 @@ def plot_magnitud(low, high, archivo):
         go.Bar(
             x=meses_df.index,
             y=meses_df["total"],
-            text=meses_df["total"],
+            text=meses_df["text"],
             marker_color=meses_df["total"],
-            texttemplate="%{y:,.0f}",
-            textfont_size=28,
+            name=f"Total de registros: <b>{meses_df['total'].sum():,.0f}</b>",
+            textfont_size=32,
             marker_line_width=0,
             marker_colorscale="portland",
             textposition="outside",
@@ -80,7 +88,6 @@ def plot_magnitud(low, high, archivo):
         ticks="outside",
         ticklen=10,
         zeroline=False,
-        title_standoff=20,
         tickcolor="#FFFFFF",
         linewidth=2,
         showgrid=False,
@@ -90,12 +97,11 @@ def plot_magnitud(low, high, archivo):
     )
 
     fig.update_yaxes(
-        title="Total de registros",
-        range=[0, meses_df["total"].max() * 1.1],
+        title="Número de registros (% del total)",
+        range=[0, meses_df["total"].max() * 1.12],
         ticks="outside",
-        tickfont_size=14,
         ticklen=10,
-        title_standoff=6,
+        title_standoff=15,
         tickcolor="#FFFFFF",
         linewidth=2,
         showgrid=True,
@@ -106,35 +112,41 @@ def plot_magnitud(low, high, archivo):
     )
 
     fig.update_layout(
-        showlegend=False,
-        width=1280,
-        height=720,
-        font_family="Quicksand",
+        showlegend=True,
+        legend_xanchor="left",
+        legend_yanchor="top",
+        legend_x=0.01,
+        legend_y=0.98,
+        legend_borderwidth=1,
+        legend_bordercolor="#FFFFFF",
+        width=1920,
+        height=1080,
+        font_family="Inter",
         font_color="#FFFFFF",
-        font_size=18,
-        title_text=f"Eventos sísmicos de magnitud <b>{low}-{high}</b> por mes de ocurrencia en México (1900-2024)",
+        font_size=24,
+        title_text=f"Eventos sísmicos de magnitud <b>{low}-{high}</b> registrados en México (1900-2025)",
         title_x=0.5,
         title_y=0.965,
-        margin_t=60,
-        margin_l=100,
+        margin_t=80,
+        margin_l=140,
         margin_r=40,
-        margin_b=90,
-        title_font_size=24,
+        margin_b=120,
+        title_font_size=36,
         plot_bgcolor="#1E1E1E",
         paper_bgcolor="#20252f",
         annotations=[
             dict(
                 x=0.015,
-                y=-0.14,
+                y=-0.11,
                 xref="paper",
                 yref="paper",
                 xanchor="left",
                 yanchor="top",
-                text="Fuente: SSN (02/09/2024)",
+                text="Fuente: SSN (01/09/2025)",
             ),
             dict(
                 x=0.5,
-                y=-0.14,
+                y=-0.11,
                 xref="paper",
                 yref="paper",
                 xanchor="center",
@@ -143,7 +155,7 @@ def plot_magnitud(low, high, archivo):
             ),
             dict(
                 x=1.01,
-                y=-0.14,
+                y=-0.11,
                 xref="paper",
                 yref="paper",
                 xanchor="right",

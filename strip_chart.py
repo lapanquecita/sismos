@@ -33,7 +33,7 @@ MESES = {
 def main():
     # Creamos 12 tonos de colores tipo hsla, con 100% de saturación
     # 75% de iluminación y 90% de transparencia.
-    tonos_de_color = [f"hsla({h}, 100%, 75%, 1.0)" for h in np.linspace(0, 360, 12)]
+    tonos_de_color = [f"hsla({h}, 100%, 75%, 1.0)" for h in np.linspace(0, 250, 12)]
 
     # Cargamos nuestro dataset de sismos.
     df = pd.read_csv("./data.csv", parse_dates=["Fecha"], index_col="Fecha")
@@ -78,17 +78,15 @@ def main():
                 line_width=0,
                 fillcolor="hsla(0, 0, 0, 0)",
                 jitter=1,
-                marker_size=14,
+                marker_size=20,
                 marker_symbol="circle-open",
-                marker_line_width=2.5,
+                marker_line_width=4,
             )
         )
 
     fig.update_xaxes(
         ticks="outside",
         ticklen=10,
-        tickfont_size=14,
-        title_standoff=18,
         tickcolor="#FFFFFF",
         linewidth=2,
         gridwidth=0.0,
@@ -98,11 +96,10 @@ def main():
 
     fig.update_yaxes(
         title="Magnitud del sismo",
-        range=[5.8, 8.4],
+        range=[5.9, 8.4],
         ticks="outside",
-        tickfont_size=14,
         ticklen=10,
-        title_standoff=6,
+        title_standoff=15,
         tickcolor="#FFFFFF",
         linewidth=2,
         gridwidth=0.5,
@@ -114,34 +111,34 @@ def main():
     fig.update_layout(
         colorway=tonos_de_color,
         showlegend=False,
-        width=1280,
-        height=720,
-        font_family="Quicksand",
+        width=1920,
+        height=1080,
+        font_family="Inter",
         font_color="white",
-        font_size=18,
-        title_text="Distribución de eventos sísmicos de <b>magnitud ≥ 6.0</b> por mes de ocurrencia en México (1900-2024)",
+        font_size=24,
+        title_text="Eventos sísmicos de <b>magnitud ≥ 6.0</b> por mes de ocurrencia en México (1900-2024)",
         title_x=0.5,
         title_y=0.965,
-        margin_t=60,
-        margin_l=100,
+        margin_t=80,
+        margin_l=140,
         margin_r=40,
-        margin_b=90,
-        title_font_size=24,
+        margin_b=120,
+        title_font_size=36,
         plot_bgcolor="#1E1E1E",
         paper_bgcolor="#20252f",
         annotations=[
             dict(
                 x=0.015,
-                y=-0.13,
+                y=-0.11,
                 xref="paper",
                 yref="paper",
                 xanchor="left",
                 yanchor="top",
-                text="Fuente: SSN (02/09/2024)",
+                text="Fuente: SSN (19/09/2025)",
             ),
             dict(
                 x=0.5,
-                y=-0.13,
+                y=-0.11,
                 xref="paper",
                 yref="paper",
                 xanchor="center",
@@ -150,7 +147,7 @@ def main():
             ),
             dict(
                 x=1.01,
-                y=-0.13,
+                y=-0.11,
                 xref="paper",
                 yref="paper",
                 xanchor="right",

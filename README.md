@@ -27,3 +27,11 @@ En cada círculo se muestra la magnitud, la entidad donde ocurrió el sismo, as�
 Durante el 2023 se han registrado el mayor número de eventos sísmicos dentro de la Ciudad de México. Con este mapa de dispersión se puede observar la ubicación de cada sismo, así como su magnitud y un desglose por año de registro.
 
 ![Imagen 3](./imgs/cdmx.png)
+
+## Mapa de densidad
+
+Este mapa muestra la ubicación de todos los sismos registrados en el país.
+
+En si no es muy útil, pero está bonito para usarse de fondo de pantalla.
+
+![Mapa densidad](./imgs/mapa_densidad.png)
